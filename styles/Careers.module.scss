@@ -1,0 +1,162 @@
+.careersHero {
+  background: linear-gradient(135deg, #1a237e 0%, #4a6cf7 100%);
+  color: white;
+  padding: 8rem 0 4rem;
+  
+  h1, p {
+    color: white;
+  }
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.whyJoinUs {
+  padding: 5rem 0;
+  background-color: white;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.benefitCard {
+  text-align: center;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.benefitIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.openPositions {
+  padding: 5rem 0;
+  background-color: var(--light-color);
+}
+
+.jobList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.jobCard {
+  background-color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.jobHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  
+  h3 {
+    margin-bottom: 0;
+  }
+}
+
+.jobMeta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.jobType {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+.jobLocation {
+  background-color: var(--light-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+.jobDescription {
+  margin-bottom: 1.5rem;
+}
+
+.jobRequirements {
+  margin-bottom: 2rem;
+  
+  h4 {
+    margin-bottom: 0.75rem;
+  }
+  
+  ul {
+    padding-left: 1.5rem;
+  }
+  
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.applyBtn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  display: inline-block;
+  
+  &:hover {
+    background-color: darken(#4a6cf7, 10%);
+  }
+}
+
+.cta {
+  background: linear-gradient(135deg, #4a6cf7 0%, #6a7c94 100%);
+  color: white;
+  text-align: center;
+  padding: 5rem 0;
+  
+  h2, p {
+    color: white;
+  }
+  
+  p {
+    margin-bottom: 2rem;
+  }
+}
+
+.primaryBtn {
+  background-color: white;
+  color: var(--primary-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  display: inline-block;
+  
+  &:hover {
+    background-color: var(--light-color);
+  }
+}
+
+.ctaButton {
+  display: inline-block;
+} 

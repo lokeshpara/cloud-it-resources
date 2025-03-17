@@ -1,0 +1,18 @@
+/* Add these responsive styles to your About.module.scss */
+
+.twoColumnGrid {
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.teamGrid, .valuesGrid {
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+} 

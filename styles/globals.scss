@@ -1,0 +1,25 @@
+/* Add these to your existing global styles */
+
+/* Prevent horizontal overflow on mobile */
+body, html {
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* Improve mobile rendering */
+@media (max-width: 480px) {
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+} 

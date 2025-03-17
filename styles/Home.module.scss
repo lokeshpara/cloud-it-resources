@@ -1,0 +1,55 @@
+/* Add these responsive styles to your Home.module.scss */
+
+/* Make hero section more responsive */
+.hero {
+  padding: 8rem 0 6rem;
+  
+  @media (max-width: 1024px) {
+    padding: 7rem 0 5rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 6rem 0 4rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 5rem 0 3rem;
+  }
+}
+
+.heroContent {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* Make cards stack properly on mobile */
+.featureGrid, .aboutGrid {
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Adjust CTA buttons for mobile */
+.heroCta {
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    
+    a {
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+    }
+  }
+}
+
+/* Improve card display on smaller screens */
+.featureCard {
+  @media (max-width: 480px) {
+    padding: 1.5rem;
+  }
+} 
