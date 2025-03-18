@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className={styles.container}>
         <Link href="/" passHref legacyBehavior>
           <a className={styles.logo}>
-            <Image src="/images/logo.svg" alt="Cloud.IT Resources" width={180} height={60} priority />
+            <Image src="./images/logo.svg" alt="Cloud.IT Resources" width={180} height={60} priority />
           </a>
         </Link>
         <motion.button
