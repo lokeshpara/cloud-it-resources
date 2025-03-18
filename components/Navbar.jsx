@@ -58,7 +58,14 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Link href={link.path} passHref legacyBehavior>
-                  <a onClick={toggleMenu}>{link.name}</a>
+                  <a 
+                    className={router.pathname === link.path ? styles.active : ''}
+                    onClick={() => {
+                      toggleMenu();
+                    }}
+                  >
+                    {link.name}
+                  </a>
                 </Link>
               </li>
             ))}
@@ -69,4 +76,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

@@ -4,8 +4,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/cloud-it-resources',
-  assetPrefix: '/cloud-it-resources/',
+  // Remove basePath and assetPrefix if the site is showing 404
+  // basePath: '/cloud-it-resources',
+  // assetPrefix: '/cloud-it-resources/',
 };
 
 module.exports = nextConfig; 
