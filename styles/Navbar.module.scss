@@ -167,6 +167,8 @@
     background: rgba(255, 255, 255, 0.01);
     transform-style: preserve-3d;
     overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
     
     &::before {
       content: '';
@@ -182,6 +184,8 @@
       opacity: 0;
       transition: all 0.5s ease;
       transform: translateX(-100%);
+      pointer-events: none;
+      z-index: -1;
     }
 
     &::after {
@@ -197,6 +201,8 @@
       opacity: 0;
       transition: all 0.5s ease;
       transform: translateX(-100%) scale(0.8);
+      pointer-events: none;
+      z-index: -1;
     }
     
     &:hover {

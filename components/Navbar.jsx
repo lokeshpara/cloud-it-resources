@@ -12,7 +12,7 @@ const Navbar = () => {
   const router = useRouter();
 
   const navLinks = [
-    { name: 'Home', path: './' },
+    { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
     { name: 'Careers', path: '/careers' },
@@ -35,12 +35,24 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleNavClick = (e, path) => {
+    e.preventDefault();
+    setIsOpen(false);
+    router.push(path);
+  };
+
   return (
     <header className={`${styles.header} ${!visible && styles.hidden}`}>
       <div className={styles.container}>
         <Link href="/" passHref legacyBehavior>
           <a className={styles.logo}>
-            <Image src="./images/logo.svg" alt="Cloud.IT Resources" width={180} height={60} priority />
+            <Image 
+              src="/images/logo.svg"
+              alt="Cloud.IT Resources" 
+              width={180} 
+              height={60} 
+              priority 
+            />
           </a>
         </Link>
         <motion.button
@@ -60,9 +72,7 @@ const Navbar = () => {
                 <Link href={link.path} passHref legacyBehavior>
                   <a 
                     className={router.pathname === link.path ? styles.active : ''}
-                    onClick={() => {
-                      toggleMenu();
-                    }}
+                    onClick={(e) => handleNavClick(e, link.path)}
                   >
                     {link.name}
                   </a>
