@@ -1,201 +1,287 @@
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout';
-import AnimatedSection from '../components/AnimatedSection';
 import styles from '../styles/Services.module.scss';
-import Link from 'next/link';
+import WaveBackground from '../components/WaveBackground';
+import { FaCloud, FaLock, FaCode, FaDatabase, FaRocket, FaCogs, FaChartLine, FaShieldAlt } from 'react-icons/fa';
 
 export default function Services() {
+  const services = [
+    {
+      icon: <FaCloud />,
+      title: "Cloud Infrastructure",
+      description: "Build and manage scalable, secure cloud infrastructure using AWS, Azure, or GCP.",
+      features: [
+        "Infrastructure as Code",
+        "Auto-scaling solutions",
+        "High availability architecture",
+        "Cost optimization"
+      ]
+    },
+    {
+      icon: <FaLock />,
+      title: "Cloud Security",
+      description: "Implement robust security measures to protect your cloud assets and data.",
+      features: [
+        "Security assessment",
+        "Compliance management",
+        "Identity & access control",
+        "Threat detection"
+      ]
+    },
+    {
+      icon: <FaCode />,
+      title: "Cloud Development",
+      description: "Develop cloud-native applications and microservices architecture.",
+      features: [
+        "Serverless applications",
+        "Containerization",
+        "API development",
+        "CI/CD pipelines"
+      ]
+    },
+    {
+      icon: <FaDatabase />,
+      title: "Data Solutions",
+      description: "Implement scalable database solutions and data analytics platforms.",
+      features: [
+        "Database migration",
+        "Big data processing",
+        "Analytics platforms",
+        "Data warehousing"
+      ]
+    },
+    {
+      icon: <FaCogs />,
+      title: "DevOps Services",
+      description: "Streamline development and operations with modern DevOps practices.",
+      features: [
+        "Automation pipelines",
+        "Configuration management",
+        "Monitoring & logging",
+        "Performance optimization"
+      ]
+    },
+    {
+      icon: <FaChartLine />,
+      title: "Cloud Optimization",
+      description: "Optimize your cloud infrastructure for performance and cost.",
+      features: [
+        "Cost analysis",
+        "Performance tuning",
+        "Resource optimization",
+        "Capacity planning"
+      ]
+    }
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
   return (
-    <Layout title="Our Services - Cloud.IT Resources">
-      {/* Hero Section */}
-      <section className={styles.servicesHero}>
-        <div className="container">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className={styles.heroContent}
-          >
-            <h1>Our Services</h1>
-            <p>Comprehensive IT solutions tailored to your business needs</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Services Overview */}
-      <section className={styles.servicesOverview}>
-        <div className="container">
-          <AnimatedSection>
-            <h2 className="sectionTitle">What We Offer</h2>
-            <p className="sectionSubtitle">Explore our range of IT services designed to help your business thrive</p>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Individual Services */}
-      <section id="cloud" className={styles.serviceSection}>
-        <div className="container">
-          <div className={styles.serviceCard}>
-            <AnimatedSection className={styles.serviceContent}>
-              <h2>Cloud Solutions</h2>
-              <p>Leverage the power of cloud computing to improve scalability, flexibility, and efficiency.</p>
-              <ul className={styles.serviceList}>
-                <li>Cloud migration and deployment</li>
-                <li>Multi-cloud environment management</li>
-                <li>Cloud security and compliance</li>
-                <li>SaaS, PaaS, and IaaS solutions</li>
-                <li>Public, private, and hybrid cloud architecture</li>
-              </ul>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link href="/contact" className={styles.serviceBtn}>
-                  Get Started
-                </Link>
-              </motion.div>
-            </AnimatedSection>
-            <AnimatedSection className={styles.serviceImage} delay={0.3}>
-              <div className={styles.imagePlaceholder}>Cloud Image</div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      <section id="infrastructure" className={styles.serviceSection}>
-        <div className="container">
-          <div className={`${styles.serviceCard} ${styles.reversed}`}>
-            <AnimatedSection className={styles.serviceImage}>
-              <div className={styles.imagePlaceholder}>Infrastructure Image</div>
-            </AnimatedSection>
-            <AnimatedSection className={styles.serviceContent} delay={0.3}>
-              <h2>IT Infrastructure</h2>
-              <p>Build a robust IT foundation to support your business operations and growth.</p>
-              <ul className={styles.serviceList}>
-                <li>Network design and implementation</li>
-                <li>Server infrastructure and virtualization</li>
-                <li>Storage solutions and data management</li>
-                <li>Backup and disaster recovery</li>
-                <li>Infrastructure monitoring and maintenance</li>
-              </ul>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link href="/contact" className={styles.serviceBtn}>
-                  Get Started
-                </Link>
-              </motion.div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      <section id="security" className={styles.serviceSection}>
-        <div className="container">
-          <div className={styles.serviceCard}>
-            <AnimatedSection className={styles.serviceContent}>
-              <h2>Cybersecurity</h2>
-              <p>Protect your business assets and data with comprehensive security solutions.</p>
-              <ul className={styles.serviceList}>
-                <li>Security assessment and planning</li>
-                <li>Endpoint protection and management</li>
-                <li>Network security and firewall implementation</li>
-                <li>Data encryption and protection</li>
-                <li>Security awareness training</li>
-              </ul>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link href="/contact" className={styles.serviceBtn}>
-                  Get Started
-                </Link>
-              </motion.div>
-            </AnimatedSection>
-            <AnimatedSection className={styles.serviceImage} delay={0.3}>
-              <div className={styles.imagePlaceholder}>Security Image</div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      <section id="consulting" className={styles.serviceSection}>
-        <div className="container">
-          <div className={`${styles.serviceCard} ${styles.reversed}`}>
-            <AnimatedSection className={styles.serviceImage}>
-              <div className={styles.imagePlaceholder}>Consulting Image</div>
-            </AnimatedSection>
-            <AnimatedSection className={styles.serviceContent} delay={0.3}>
-              <h2>IT Consulting</h2>
-              <p>Get expert guidance and strategy to align your IT with business objectives.</p>
-              <ul className={styles.serviceList}>
-                <li>IT strategy development</li>
-                <li>Technology roadmap planning</li>
-                <li>Digital transformation consulting</li>
-                <li>IT cost optimization</li>
-                <li>Vendor selection and management</li>
-              </ul>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link href="/contact" className={styles.serviceBtn}>
-                  Get Started
-                </Link>
-              </motion.div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      <section id="development" className={styles.serviceSection}>
-        <div className="container">
-          <div className={styles.serviceCard}>
-            <AnimatedSection className={styles.serviceContent}>
-              <h2>Software Development</h2>
-              <p>Custom software solutions designed to meet your specific business requirements.</p>
-              <ul className={styles.serviceList}>
-                <li>Custom application development</li>
-                <li>Web and mobile app development</li>
-                <li>API integration and development</li>
-                <li>Legacy system modernization</li>
-                <li>DevOps implementation</li>
-              </ul>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link href="/contact" className={styles.serviceBtn}>
-                  Get Started
-                </Link>
-              </motion.div>
-            </AnimatedSection>
-            <AnimatedSection className={styles.serviceImage} delay={0.3}>
-              <div className={styles.imagePlaceholder}>Development Image</div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className={styles.cta}>
-        <div className="container">
-          <AnimatedSection>
-            <h2>Ready to Enhance Your IT Infrastructure?</h2>
-            <p>Contact us today for a free consultation and learn how our services can benefit your business.</p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={styles.ctaButton}
+    <Layout title="Services - Cloud IT Resources">
+      <div className={styles.servicesContainer}>
+        <WaveBackground />
+        
+        <section className={styles.heroSection}>
+          <div className={styles.heroContent}>
+            <motion.h1 
+              className={styles.heroTitle}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <Link href="/contact" className={styles.primaryBtn}>
-                Contact Us
-              </Link>
+              Enterprise Cloud Solutions
+            </motion.h1>
+            <motion.p 
+              className={styles.heroSubtitle}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Transform your business with our comprehensive cloud consulting services. We architect, implement, and optimize cloud solutions that drive innovation and growth.
+            </motion.p>
+
+            <motion.div 
+              className={styles.heroFeatures}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className={styles.featureItem}>
+                <FaCloud className={styles.featureIcon} />
+                <h3>Cloud Migration</h3>
+                <p>Seamless transition to AWS, Azure, or Google Cloud with zero downtime</p>
+              </div>
+              <div className={styles.featureItem}>
+                <FaLock className={styles.featureIcon} />
+                <h3>Security & Compliance</h3>
+                <p>Enterprise-grade security with regulatory compliance (HIPAA, SOC2, ISO27001)</p>
+              </div>
+              <div className={styles.featureItem}>
+                <FaRocket className={styles.featureIcon} />
+                <h3>DevOps Excellence</h3>
+                <p>Automated CI/CD pipelines and infrastructure as code solutions</p>
+              </div>
             </motion.div>
-          </AnimatedSection>
-        </div>
-      </section>
+
+            <motion.div
+              className={styles.heroStats}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <div className={styles.stat}>
+                <span className={styles.statNumber}>98%</span>
+                <span className={styles.statLabel}>Client Satisfaction</span>
+              </div>
+              <div className={styles.stat}>
+                <span className={styles.statNumber}>500+</span>
+                <span className={styles.statLabel}>Projects Delivered</span>
+              </div>
+              <div className={styles.stat}>
+                <span className={styles.statNumber}>40%</span>
+                <span className={styles.statLabel}>Cost Reduction</span>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className={styles.heroCTA}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              <div className={styles.certifications}>
+                <img src="/aws-certified.png" alt="AWS Certified Partner" />
+                <img src="/azure-certified.png" alt="Microsoft Azure Partner" />
+                <img src="/gcp-certified.png" alt="Google Cloud Partner" />
+              </div>
+              <motion.a
+                href="/contact"
+                className={styles.consultButton}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Schedule a Consultation
+              </motion.a>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className={styles.servicesGrid}>
+          <motion.h2 
+            className={styles.sectionTitle}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            Our Services
+          </motion.h2>
+
+          <div className={styles.grid}>
+            <motion.div 
+              className={styles.serviceCard}
+              whileHover={{ y: -10 }}
+            >
+              <FaCloud className={styles.icon} />
+              <h3>Cloud Migration</h3>
+              <p>Strategic planning and execution of cloud migrations with minimal disruption to your business operations.</p>
+              <ul>
+                <li>Infrastructure Assessment</li>
+                <li>Migration Strategy</li>
+                <li>Data Transfer</li>
+                <li>Application Modernization</li>
+              </ul>
+            </motion.div>
+
+            <motion.div 
+              className={styles.serviceCard}
+              whileHover={{ y: -10 }}
+            >
+              <FaLock className={styles.icon} />
+              <h3>Security & Compliance</h3>
+              <p>Comprehensive security solutions ensuring your cloud infrastructure meets industry standards.</p>
+              <ul>
+                <li>Security Assessment</li>
+                <li>Compliance Auditing</li>
+                <li>Identity Management</li>
+                <li>Threat Detection</li>
+              </ul>
+            </motion.div>
+
+            <motion.div 
+              className={styles.serviceCard}
+              whileHover={{ y: -10 }}
+            >
+              <FaCode className={styles.icon} />
+              <h3>DevOps Services</h3>
+              <p>Streamline your development and operations with automated pipelines and modern practices.</p>
+              <ul>
+                <li>CI/CD Implementation</li>
+                <li>Container Orchestration</li>
+                <li>Infrastructure as Code</li>
+                <li>Monitoring & Logging</li>
+              </ul>
+            </motion.div>
+
+            <motion.div 
+              className={styles.serviceCard}
+              whileHover={{ y: -10 }}
+            >
+              <FaDatabase className={styles.icon} />
+              <h3>Data Solutions</h3>
+              <p>Modern data architecture and analytics solutions to drive insights and decision-making.</p>
+              <ul>
+                <li>Data Warehousing</li>
+                <li>Big Data Processing</li>
+                <li>Analytics Platforms</li>
+                <li>Machine Learning Ops</li>
+              </ul>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className={styles.ctaSection}>
+          <div className={styles.container}>
+            <motion.div
+              className={styles.ctaContent}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2>Ready to Transform Your Business?</h2>
+              <p>Let's discuss how our cloud solutions can help you achieve your goals.</p>
+              <motion.a
+                href="/contact"
+                className={styles.ctaButton}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get Started
+              </motion.a>
+            </motion.div>
+          </div>
+        </section>
+      </div>
     </Layout>
   );
 } 

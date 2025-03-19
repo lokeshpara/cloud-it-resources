@@ -75,7 +75,7 @@
 
 .heroSubtitle {
   font-size: clamp(1rem, 2vw, 1.25rem);
-  color: $text-color-light;
+  color: $text-light;
   max-width: 800px;
   margin: 0 auto 2rem;
   line-height: 1.6;
@@ -241,7 +241,7 @@
   }
 
   p {
-    color: $text-color-light;
+    color: $text-light;
     line-height: 1.6;
     position: relative;
     z-index: 1;
@@ -251,7 +251,11 @@
     padding: 1.5rem;
 
     h3 {
-      font-size: 1.25rem;
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 0.95rem;
     }
   }
 }
@@ -365,7 +369,7 @@
   font-family: 'Outfit', sans-serif;
   font-size: clamp(1.25rem, 4vw, 1.75rem);
   font-weight: 400;
-  color: $text-color-light;
+  color: $text-light;
   max-width: 800px;
   margin: 0 auto 3rem;
   opacity: 0;
@@ -478,6 +482,10 @@
     font-size: 1rem;
     color: #666;
     line-height: 1.4;
+  }
+
+  p {
+    color: $text-light;
   }
 }
 
@@ -761,7 +769,7 @@
   }
   
   p {
-    color: $text-color-light;
+    color: $text-light;
     line-height: 1.6;
     position: relative;
     font-size: 1.1rem;

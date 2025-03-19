@@ -1,12 +1,28 @@
+@import 'variables';
+
 .siteContainer {
   display: flex;
   flex-direction: column;
+  width: 100%;
   min-height: 100vh;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  margin: 0;
+  padding: 0;
 }
 
 .mainContent {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.siteContainer {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.mainContent {
   padding-top: 1px; /* Add padding to account for the fixed navbar */
 
   /* Responsive padding adjustments */

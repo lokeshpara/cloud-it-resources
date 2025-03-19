@@ -1,8 +1,8 @@
 import { useEffect, useCallback, useState } from 'react';
 import Head from 'next/head';
+import Layout from '../components/Layout';
 import styles from '../styles/Home.module.scss';
 import { FaCloud, FaServer, FaDatabase, FaShieldAlt, FaNetworkWired } from 'react-icons/fa';
-import Layout from '../components/Layout';
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -66,14 +66,8 @@ export default function Home() {
   }, []);
 
   return (
-    <Layout>
+    <Layout title="Cloud IT Resources - Modern Cloud Solutions">
       <div className={`${styles.container} ${isLoaded ? styles.loaded : ''}`}>
-        <Head>
-          <title>Cloud IT Resources - Modern Cloud Solutions</title>
-          <meta name="description" content="Transform your business with our modern cloud solutions and IT resources." />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
         <div className={styles.waveWrapper}>
           <div className={`${styles.wave} ${styles.wave1}`}></div>
           <div className={`${styles.wave} ${styles.wave2}`}></div>
@@ -97,7 +91,7 @@ export default function Home() {
             </p>
             
             <div className={styles.heroButtons}>
-              <button onClick={scrollToFeatures} className={`${styles.heroButton} ${styles.primary}`}>
+              <button className={`${styles.heroButton} ${styles.primary}`}>
                 Our Services
               </button>
               <button className={`${styles.heroButton} ${styles.secondary}`}>

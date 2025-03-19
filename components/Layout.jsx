@@ -1,11 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CompanyGoals from './CompanyGoals';
 import styles from '../styles/Layout.module.scss';
 
 const Layout = ({ children, title = 'Cloud.IT Resources' }) => {
+  const router = useRouter();
+  const isHomePage = router.pathname === '/';
+
   return (
     <>
       <Head>
@@ -18,7 +22,7 @@ const Layout = ({ children, title = 'Cloud.IT Resources' }) => {
       <div className={styles.siteContainer}>
         <Navbar />
         <main className={styles.mainContent}>{children}</main>
-        <CompanyGoals />
+        {isHomePage && <CompanyGoals />}
         <Footer />
       </div>
     </>

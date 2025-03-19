@@ -1,18 +1,524 @@
-/* Add these responsive styles to your About.module.scss */
+@import 'variables';
 
-.twoColumnGrid {
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+.waveWrapper {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wave {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-repeat: repeat-x;
+  opacity: 0.5;
+}
+
+.wave1 {
+  background: linear-gradient(45deg, $primary-color, $secondary-color);
+  opacity: 0.2;
+  animation: wave 20s linear infinite;
+  top: -50%;
+}
+
+.wave2 {
+  background: linear-gradient(45deg, $secondary-color, $accent-color);
+  opacity: 0.15;
+  animation: wave 15s linear infinite reverse;
+  top: -30%;
+}
+
+.wave3 {
+  background: linear-gradient(45deg, $accent-color, $primary-color);
+  opacity: 0.12;
+  animation: wave 25s linear infinite;
+  top: -40%;
+}
+
+.aboutContainer {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.heroSection {
+  position: relative;
+  min-height: calc(100vh - 80px);
+  padding: 4rem 2rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  z-index: 2;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: 6rem 1rem;
+    min-height: auto;
   }
 }
 
-.teamGrid, .valuesGrid {
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.heroContent {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  z-index: 2;
+  position: relative;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
+}
+
+.heroLeft {
+  color: white;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
   
-  @media (max-width: 480px) {
+  @media (max-width: $breakpoint-tablet) {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    text-align: center;
+  }
+}
+
+.heroSubtitle {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 3rem;
+  line-height: 1.6;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}
+
+.valueProps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.valueProp {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: $border-radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateX(10px);
+  }
+
+  .valueIcon {
+    font-size: 2rem;
+    color: white;
+    opacity: 0.9;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: white;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    text-align: left;
+  }
+}
+
+.heroRight {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.achievementsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: $breakpoint-mobile) {
     grid-template-columns: 1fr;
   }
-} 
+}
+
+.achievementCard {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: $border-radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+
+  .achievementIcon {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  .achievementNumber {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+
+  .achievementLabel {
+    display: block;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .achievementDesc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.certifications {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+
+  img {
+    height: 60px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    gap: 1.5rem;
+
+    img {
+      height: 50px;
+    }
+  }
+}
+
+.timelineSection {
+  padding: 6rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sectionTitle {
+    text-align: center;
+    font-size: 2.5rem;
+    background: $primary-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4rem;
+  }
+}
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $primary-gradient;
+    z-index: 1;
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.timelineItem {
+  position: relative;
+  z-index: 2;
+
+  .timelineContent {
+    background: white;
+    padding: 2rem;
+    border-radius: $border-radius-lg;
+    box-shadow: $box-shadow;
+    text-align: center;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      background: $primary-gradient;
+      border-radius: 50%;
+      border: 4px solid white;
+    }
+
+    .year {
+      display: inline-block;
+      background: $primary-gradient;
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: $border-radius;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      color: $text-primary;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    p {
+      color: $text-secondary;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+}
+
+.missionSection {
+  padding: 6rem 2rem;
+  background: linear-gradient(#fffdfd00, #acdbf96e);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .twoColumnGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+
+    @media (max-width: $breakpoint-tablet) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .content {
+    h2 {
+      font-size: 2.5rem;
+      background: $primary-gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      color: $text-secondary;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .imageWrapper {
+    position: relative;
+    padding-bottom: 100%;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+  }
+
+  .missionImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/mission.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: $border-radius-lg;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.valuesSection {
+  padding: 6rem 2rem;
+  position: relative;
+  z-index: 2;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sectionTitle {
+    text-align: center;
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 3rem;
+  }
+
+  .valuesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+
+  .valueCard {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: $border-radius-lg;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .iconWrapper {
+      width: 60px;
+      height: 60px;
+      background: $primary-gradient;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.8rem;
+      color: white;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+    }
+  }
+}
+
+.ctaSection {
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+  }
+
+  .ctaButton {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: white;
+    color: $primary-color;
+    border-radius: $border-radius;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .missionSection,
+  .valuesSection,
+  .ctaSection {
+    padding: 4rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .valueCard {
+    h3 {
+      font-size: 1.3rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+}

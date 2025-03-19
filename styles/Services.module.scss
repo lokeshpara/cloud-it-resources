@@ -1,130 +1,374 @@
-.servicesHero {
-  background: linear-gradient(135deg, #1a237e 0%, #4a6cf7 100%);
-  color: white;
-  padding: 8rem 0 4rem;
-  
-  h1, p {
-    color: white;
+@import 'variables';
+
+.servicesContainer {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.heroSection {
+  position: relative;
+  min-height: calc(100vh - 80px);
+  padding: 4rem 2rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  z-index: 2;
+
+  @media (max-width: $breakpoint-tablet) {
+    padding: 6rem 1rem 4rem;
+    min-height: calc(100vh - 60px);
   }
 }
 
 .heroContent {
-  max-width: 800px;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
+  z-index: 2;
+  position: relative;
 }
 
-.servicesOverview {
-  padding: 4rem 0 2rem;
-}
-
-.serviceSection {
-  padding: 4rem 0;
-  
-  &:nth-child(odd) {
-    background-color: var(--light-color);
-  }
-}
-
-.serviceCard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-  
-  &.reversed {
-    grid-template-columns: 1fr 1fr;
-    direction: rtl;
-    
-    > div {
-      direction: ltr;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    
-    &.reversed {
-      grid-template-columns: 1fr;
-      direction: ltr;
-    }
-  }
-}
-
-.serviceContent {
-  h2 {
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    margin-bottom: 1.5rem;
-  }
-}
-
-.serviceList {
-  margin-bottom: 2rem;
-  padding-left: 1.5rem;
-  
-  li {
-    margin-bottom: 0.75rem;
-  }
-}
-
-.serviceBtn {
-  background-color: var(--primary-color);
+.heroTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: bold;
+  margin-bottom: 1.5rem;
   color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
-  font-weight: 600;
-  display: inline-block;
+  line-height: 1.2;
   
-  &:hover {
-    background-color: darken(#4a6cf7, 10%);
+  @media (max-width: $breakpoint-tablet) {
+    font-size: clamp(2rem, 4vw, 2.5rem);
   }
 }
 
-.imagePlaceholder {
-  background-color: #e2e8f0;
-  height: 300px;
-  border-radius: var(--border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: var(--secondary-color);
-}
+.heroSubtitle {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
 
-.cta {
-  background: linear-gradient(135deg, #4a6cf7 0%, #6a7c94 100%);
-  color: white;
-  text-align: center;
-  padding: 5rem 0;
-  
-  h2, p {
-    color: white;
-  }
-  
-  p {
+  @media (max-width: $breakpoint-tablet) {
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
     margin-bottom: 2rem;
   }
 }
 
-.primaryBtn {
-  background-color: white;
-  color: var(--primary-color);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
-  font-weight: 600;
-  display: inline-block;
-  
-  &:hover {
-    background-color: var(--light-color);
+.heroFeatures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
   }
 }
 
-.ctaButton {
+.featureItem {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: $border-radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .featureIcon {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  h3 {
+    color: white;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
+.heroStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 0 auto 4rem;
+  max-width: 900px;
+
+  @media (max-width: $breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.stat {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: $border-radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  .statNumber {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: $primary-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+
+  .statLabel {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.heroCTA {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.certifications {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  img {
+    height: 60px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    gap: 1.5rem;
+
+    img {
+      height: 50px;
+    }
+  }
+}
+
+.consultButton {
   display: inline-block;
-} 
+  padding: 1rem 2.5rem;
+  background: white;
+  color: $primary-color;
+  border-radius: $border-radius;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: $box-shadow;
 
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-lg;
+  }
 
+  @media (max-width: $breakpoint-tablet) {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+.servicesGrid {
+  padding: 6rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+
+  .sectionTitle {
+    text-align: center;
+    font-size: 2.5rem;
+    background: $primary-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4rem;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.serviceCard {
+  background: white;
+  padding: 2rem;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow;
+  transition: all 0.3s ease;
+  border: 1px solid rgba($primary-color, 0.1);
+
+  &:hover {
+    box-shadow: $box-shadow-lg;
+  }
+
+  .icon {
+    font-size: 2.5rem;
+    color: $primary-color;
+    margin-bottom: 1.5rem;
+  }
+
+  h3 {
+    color: $text-primary;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: $text-secondary;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      color: $text-secondary;
+      margin-bottom: 0.5rem;
+      padding-left: 1.5rem;
+      position: relative;
+
+      &:before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.ctaSection {
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(rgba($primary-color, 0.1), rgba($primary-color, 0.2));
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .ctaContent {
+    backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: $border-radius-lg;
+    background: rgba(255, 255, 255, 0.1);
+
+    h2 {
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+  }
+
+  .ctaButton {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: white;
+    color: $primary-color;
+    border-radius: $border-radius;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $box-shadow;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .servicesGrid {
+    padding: 4rem 1rem;
+
+    .sectionTitle {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+  }
+
+  .grid {
+    gap: 1.5rem;
+  }
+
+  .serviceCard {
+    padding: 1.5rem;
+
+    .icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+
+  .ctaSection {
+    padding: 4rem 1rem;
+
+    .ctaContent {
+      padding: 2rem;
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+}
