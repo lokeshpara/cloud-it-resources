@@ -4,15 +4,15 @@ A modern, responsive website for Cloud IT Resources built with Next.js, showcasi
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Components](#components)
-- [Styling](#styling)
-- [Animations](#animations)
-- [Deployment](#deployment)
-- [Built With](#built-with)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Components](#-components)
+- [Styling](#-styling)
+- [Animations](#-animations)
+- [Deployment](#-deployment)
+- [Built With](#️-built-with)
 
 ## 🔍 Overview
 
