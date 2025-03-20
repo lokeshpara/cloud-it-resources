@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import styles from '../styles/Navbar.module.scss';
+import getImagePath from '../utils/imageLoader';
 
 
 const Navbar = () => {
@@ -48,7 +49,7 @@ const Navbar = () => {
         <Link href="/" passHref legacyBehavior>
           <a className={styles.logo}>
             <Image 
-              src="/images/logo.svg"
+              src={getImagePath('/images/logo.svg')}
               alt="Cloud.IT Resources" 
               width={180} 
               height={60} 

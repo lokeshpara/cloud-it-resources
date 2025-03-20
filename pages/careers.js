@@ -5,6 +5,7 @@ import styles from '../styles/Careers.module.scss';
 import WaveBackground from '../components/WaveBackground';
 import { FaBriefcase, FaClock, FaMapMarkerAlt, FaChevronDown, FaUsers, FaRocket, FaMedal, FaGraduationCap, FaHandshake, FaLightbulb } from 'react-icons/fa';
 import Link from 'next/link';
+import getImagePath from '../utils/imageLoader';
 
   const jobPositions = [
     {
@@ -361,8 +362,8 @@ export default function Careers() {
                         transition={{ delay: 0.3 }}
                       >
                         <img 
-                          src="/images/culture-placeholder.jpg" 
-                          alt="Team Culture" 
+                          src={getImagePath('/images/culture-placeholder.jpg')}
+                          alt="Team Culture"
                           className={styles.cultureImageContent}
                         />
                       </motion.div>
