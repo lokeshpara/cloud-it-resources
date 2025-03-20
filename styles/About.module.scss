@@ -44,6 +44,7 @@
   min-height: 100vh;
   position: relative;
   z-index: 1;
+  background: linear-gradient(#00000000, #000000 100%);
 }
 
 .heroSection {
@@ -89,6 +90,9 @@
   font-weight: bold;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  background: linear-gradient(135deg, #393b3e 0%, #1471e3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   
   @media (max-width: $breakpoint-tablet) {
     font-size: clamp(2rem, 4vw, 2.5rem);
@@ -119,32 +123,36 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border-radius: $border-radius-lg;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
 
   &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
     transform: translateX(10px);
   }
 
   .valueIcon {
-    font-size: 2rem;
-    color: white;
+    font-size: 2.5rem;
+    color: #00c6ff;
     opacity: 0.9;
   }
 
   h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.25rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
     color: white;
+    font-weight: 600;
   }
 
   p {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
   }
 
   @media (max-width: $breakpoint-tablet) {
@@ -169,72 +177,108 @@
 }
 
 .achievementCard {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: $border-radius-lg;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
   transition: all 0.3s ease;
 
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
   .achievementIcon {
-    font-size: 2rem;
-    color: white;
+    font-size: 2.5rem;
+    color: #00c6ff;
     margin-bottom: 1rem;
     opacity: 0.9;
   }
 
   .achievementNumber {
     display: block;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    color: white;
-    margin-bottom: 0.25rem;
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
   }
 
   .achievementLabel {
     display: block;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
+    color: white;
+    font-size: 1.1rem;
     margin-bottom: 0.5rem;
+    font-weight: 500;
   }
 
   .achievementDesc {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
   }
 }
 
 .certifications {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  margin-top: 1rem;
+  gap: 3rem;
+  margin-top: 2rem;
 
-  img {
-    height: 60px;
-    filter: brightness(0) invert(1);
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
+  @media (max-width: 768px) {
+    gap: 2rem;
+  }
 
-    &:hover {
-      opacity: 1;
+  @media (max-width: 480px) {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+}
+
+.certificationIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+
+    .cloudIcon {
+      opacity: 0.8;
     }
   }
 
-  @media (max-width: $breakpoint-tablet) {
-    gap: 1.5rem;
+  .cloudIcon {
+    color: #0072ff;
+    transition: opacity 0.2s ease;
+  }
 
-    img {
-      height: 50px;
+  span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #d1d1d1;
+
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
     }
+  }
+  
+  .cloudDescription {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+    margin-top: -0.3rem;
   }
 }
 
 .timelineSection {
-  padding: 6rem 2rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  padding: 0rem 2rem;
+  background: linear-gradient(#00000000, #000000 100%);
   position: relative;
   z-index: 2;
 
@@ -246,7 +290,7 @@
   .sectionTitle {
     text-align: center;
     font-size: 2.5rem;
-    background: $primary-gradient;
+    background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 4rem;
@@ -266,7 +310,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: $primary-gradient;
+    background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
     z-index: 1;
   }
 
@@ -285,12 +329,19 @@
   z-index: 2;
 
   .timelineContent {
-    background: white;
+    background: rgba(255, 255, 255, 0.05);
     padding: 2rem;
     border-radius: $border-radius-lg;
-    box-shadow: $box-shadow;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
     position: relative;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+    }
 
     &:before {
       content: '';
@@ -300,30 +351,31 @@
       transform: translateX(-50%);
       width: 20px;
       height: 20px;
-      background: $primary-gradient;
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
       border-radius: 50%;
-      border: 4px solid white;
+      border: 4px solid #000000;
     }
 
     .year {
       display: inline-block;
-      background: $primary-gradient;
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
       color: white;
-      padding: 0.25rem 1rem;
+      padding: 0.5rem 1.5rem;
       border-radius: $border-radius;
       font-weight: 600;
       margin-bottom: 1rem;
     }
 
     h3 {
-      color: $text-primary;
+      color: white;
       margin-bottom: 0.5rem;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
     }
 
     p {
-      color: $text-secondary;
-      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
       line-height: 1.5;
     }
   }

@@ -1,284 +1,268 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/Services.module.scss';
 import WaveBackground from '../components/WaveBackground';
-import { FaCloud, FaLock, FaCode, FaDatabase, FaRocket, FaCogs, FaChartLine, FaShieldAlt } from 'react-icons/fa';
+import { FaCloud, FaLock, FaCode, FaDatabase, FaRocket, FaCogs, FaChartLine, FaShieldAlt, FaServer, FaNetworkWired, FaDesktop, FaSyncAlt, FaChevronDown } from 'react-icons/fa';
 
 export default function Services() {
+  const [expandedService, setExpandedService] = useState(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Track mouse movement for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  const toggleService = (id) => {
+    setExpandedService(expandedService === id ? null : id);
+  };
+
+  const calculateParallax = (serviceId, index) => {
+    if (!mousePosition) return { x: 0, y: 0 };
+    
+    // Only apply parallax to the currently expanded item
+    if (expandedService !== serviceId) return { x: 0, y: 0 };
+    
+    const speed = 0.01;
+    const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1000;
+    const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+    
+    const centerX = windowWidth / 2;
+    const centerY = windowHeight / 2;
+    
+    const offsetX = (mousePosition.x - centerX) * speed;
+    const offsetY = (mousePosition.y - centerY) * speed;
+    
+    return { x: offsetX, y: offsetY };
+  };
+
   const services = [
     {
+      id: 'cloud-migration',
       icon: <FaCloud />,
-      title: "Cloud Infrastructure",
-      description: "Build and manage scalable, secure cloud infrastructure using AWS, Azure, or GCP.",
+      title: "Cloud Migration",
+      description: "Strategic planning and execution of cloud migrations with minimal disruption to your business operations.",
       features: [
-        "Infrastructure as Code",
-        "Auto-scaling solutions",
-        "High availability architecture",
-        "Cost optimization"
+        "Infrastructure Assessment",
+        "Migration Strategy",
+        "Data Transfer",
+        "Application Modernization"
       ]
     },
     {
+      id: 'security',
       icon: <FaLock />,
-      title: "Cloud Security",
-      description: "Implement robust security measures to protect your cloud assets and data.",
+      title: "Security & Compliance",
+      description: "Comprehensive security solutions ensuring your cloud infrastructure meets industry standards.",
       features: [
-        "Security assessment",
-        "Compliance management",
-        "Identity & access control",
-        "Threat detection"
+        "Security Assessment",
+        "Compliance Auditing",
+        "Identity Management",
+        "Threat Detection"
       ]
     },
     {
+      id: 'devops',
       icon: <FaCode />,
-      title: "Cloud Development",
-      description: "Develop cloud-native applications and microservices architecture.",
+      title: "DevOps Services",
+      description: "Streamline your development and operations with automated pipelines and modern practices.",
       features: [
-        "Serverless applications",
-        "Containerization",
-        "API development",
-        "CI/CD pipelines"
+        "CI/CD Implementation",
+        "Container Orchestration",
+        "Infrastructure as Code",
+        "Monitoring & Logging"
       ]
     },
     {
+      id: 'data',
       icon: <FaDatabase />,
       title: "Data Solutions",
-      description: "Implement scalable database solutions and data analytics platforms.",
+      description: "Modern data architecture and analytics solutions to drive insights and decision-making.",
       features: [
-        "Database migration",
-        "Big data processing",
-        "Analytics platforms",
-        "Data warehousing"
+        "Data Warehousing",
+        "Big Data Processing",
+        "Analytics Platforms",
+        "Machine Learning Ops"
       ]
     },
     {
-      icon: <FaCogs />,
-      title: "DevOps Services",
-      description: "Streamline development and operations with modern DevOps practices.",
+      id: 'serverless',
+      icon: <FaServer />,
+      title: "Serverless Computing",
+      description: "Build and deploy applications without managing server infrastructure for enhanced scalability.",
       features: [
-        "Automation pipelines",
-        "Configuration management",
-        "Monitoring & logging",
-        "Performance optimization"
+        "Function as a Service (FaaS)",
+        "Event-driven Architecture",
+        "Microservices Design",
+        "Automated Scaling"
       ]
     },
     {
-      icon: <FaChartLine />,
-      title: "Cloud Optimization",
-      description: "Optimize your cloud infrastructure for performance and cost.",
+      id: 'networking',
+      icon: <FaNetworkWired />,
+      title: "Cloud Networking",
+      description: "Design and implement secure, high-performance networking solutions for cloud environments.",
       features: [
-        "Cost analysis",
-        "Performance tuning",
-        "Resource optimization",
-        "Capacity planning"
+        "VPC Architecture",
+        "Load Balancer Configuration",
+        "Network Security Groups",
+        "Global Content Delivery"
+      ]
+    },
+    {
+      id: 'desktop',
+      icon: <FaDesktop />,
+      title: "Desktop as a Service",
+      description: "Provide secure, virtual desktop experiences for remote teams with centralized management.",
+      features: [
+        "Virtual Desktop Infrastructure",
+        "Remote Access Solutions",
+        "Desktop Security",
+        "Performance Optimization"
+      ]
+    },
+    {
+      id: 'recovery',
+      icon: <FaSyncAlt />,
+      title: "Disaster Recovery",
+      description: "Implement robust disaster recovery solutions to ensure business continuity during disruptions.",
+      features: [
+        "Recovery Point Objectives",
+        "Backup Strategies",
+        "Cross-region Replication",
+        "Failover Automation"
       ]
     }
   ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5
-      }
-    }
-  };
 
   return (
     <Layout title="Services - Cloud IT Resources">
       <div className={styles.servicesContainer}>
         <WaveBackground />
         
-        <section className={styles.heroSection}>
-          <div className={styles.heroContent}>
-            <motion.h1 
-              className={styles.heroTitle}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              Enterprise Cloud Solutions
-            </motion.h1>
-            <motion.p 
-              className={styles.heroSubtitle}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Transform your business with our comprehensive cloud consulting services. We architect, implement, and optimize cloud solutions that drive innovation and growth.
-            </motion.p>
-
-            <motion.div 
-              className={styles.heroFeatures}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <div className={styles.featureItem}>
-                <FaCloud className={styles.featureIcon} />
-                <h3>Cloud Migration</h3>
-                <p>Seamless transition to AWS, Azure, or Google Cloud with zero downtime</p>
-              </div>
-              <div className={styles.featureItem}>
-                <FaLock className={styles.featureIcon} />
-                <h3>Security & Compliance</h3>
-                <p>Enterprise-grade security with regulatory compliance (HIPAA, SOC2, ISO27001)</p>
-              </div>
-              <div className={styles.featureItem}>
-                <FaRocket className={styles.featureIcon} />
-                <h3>DevOps Excellence</h3>
-                <p>Automated CI/CD pipelines and infrastructure as code solutions</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className={styles.heroStats}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <div className={styles.stat}>
-                <span className={styles.statNumber}>98%</span>
-                <span className={styles.statLabel}>Client Satisfaction</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statNumber}>500+</span>
-                <span className={styles.statLabel}>Projects Delivered</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statNumber}>40%</span>
-                <span className={styles.statLabel}>Cost Reduction</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className={styles.heroCTA}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <div className={styles.certifications}>
-                <img src="/aws-certified.png" alt="AWS Certified Partner" />
-                <img src="/azure-certified.png" alt="Microsoft Azure Partner" />
-                <img src="/gcp-certified.png" alt="Google Cloud Partner" />
-              </div>
-              <motion.a
-                href="/contact"
-                className={styles.consultButton}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Schedule a Consultation
-              </motion.a>
-            </motion.div>
-          </div>
-        </section>
-
-        <section className={styles.servicesGrid}>
+        <section className={styles.servicesSection}>
           <motion.h2 
             className={styles.sectionTitle}
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
           >
             Our Services
           </motion.h2>
+          
+          <motion.p 
+            className={styles.sectionDescription}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Comprehensive cloud solutions to accelerate your digital transformation
+          </motion.p>
 
-          <div className={styles.grid}>
-            <motion.div 
-              className={styles.serviceCard}
-              whileHover={{ y: -10 }}
-            >
-              <FaCloud className={styles.icon} />
-              <h3>Cloud Migration</h3>
-              <p>Strategic planning and execution of cloud migrations with minimal disruption to your business operations.</p>
-              <ul>
-                <li>Infrastructure Assessment</li>
-                <li>Migration Strategy</li>
-                <li>Data Transfer</li>
-                <li>Application Modernization</li>
-              </ul>
-            </motion.div>
+          <div className={styles.servicesAccordion}>
+            {services.map((service, index) => {
+              const parallax = calculateParallax(service.id, index);
+              
+              return (
+                <motion.div 
+                  key={service.id}
+                  className={`${styles.serviceItem} ${expandedService === service.id ? styles.expanded : ''}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ 
+                    opacity: 1, 
+                    y: 0,
+                    x: parallax.x,
+                    y: parallax.y,
+                    transition: { duration: 0.5, delay: index * 0.1 }
+                  }}
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ 
+                    duration: 0.3, 
+                    type: "spring", 
+                    stiffness: 300, 
+                    damping: 20
+                  }}
+                >
+                  <div 
+                    className={styles.serviceHeader}
+                    onClick={() => toggleService(service.id)}
+                  >
+                    <motion.div 
+                      className={styles.serviceIcon}
+                      whileHover={{ rotate: 5 }}
+                      animate={{ 
+                        scale: expandedService === service.id ? 1.1 : 1
+                      }}
+                    >
+                      {service.icon}
+                    </motion.div>
+                    <h3>{service.title}</h3>
+                    <motion.div 
+                      className={styles.chevron}
+                      animate={{ 
+                        rotate: expandedService === service.id ? 180 : 0,
+                        scale: expandedService === service.id ? 1.2 : 1
+                      }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <FaChevronDown />
+                    </motion.div>
+                  </div>
 
-            <motion.div 
-              className={styles.serviceCard}
-              whileHover={{ y: -10 }}
-            >
-              <FaLock className={styles.icon} />
-              <h3>Security & Compliance</h3>
-              <p>Comprehensive security solutions ensuring your cloud infrastructure meets industry standards.</p>
-              <ul>
-                <li>Security Assessment</li>
-                <li>Compliance Auditing</li>
-                <li>Identity Management</li>
-                <li>Threat Detection</li>
-              </ul>
-            </motion.div>
-
-            <motion.div 
-              className={styles.serviceCard}
-              whileHover={{ y: -10 }}
-            >
-              <FaCode className={styles.icon} />
-              <h3>DevOps Services</h3>
-              <p>Streamline your development and operations with automated pipelines and modern practices.</p>
-              <ul>
-                <li>CI/CD Implementation</li>
-                <li>Container Orchestration</li>
-                <li>Infrastructure as Code</li>
-                <li>Monitoring & Logging</li>
-              </ul>
-            </motion.div>
-
-            <motion.div 
-              className={styles.serviceCard}
-              whileHover={{ y: -10 }}
-            >
-              <FaDatabase className={styles.icon} />
-              <h3>Data Solutions</h3>
-              <p>Modern data architecture and analytics solutions to drive insights and decision-making.</p>
-              <ul>
-                <li>Data Warehousing</li>
-                <li>Big Data Processing</li>
-                <li>Analytics Platforms</li>
-                <li>Machine Learning Ops</li>
-              </ul>
-            </motion.div>
-          </div>
-        </section>
-
-        <section className={styles.ctaSection}>
-          <div className={styles.container}>
-            <motion.div
-              className={styles.ctaContent}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2>Ready to Transform Your Business?</h2>
-              <p>Let's discuss how our cloud solutions can help you achieve your goals.</p>
-              <motion.a
-                href="/contact"
-                className={styles.ctaButton}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get Started
-              </motion.a>
-            </motion.div>
+                  <AnimatePresence>
+                    {expandedService === service.id && (
+                      <motion.div 
+                        className={styles.serviceContent}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ 
+                          duration: 0.4,
+                          ease: [0.04, 0.62, 0.23, 0.98]
+                        }}
+                      >
+                        <motion.p
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.1 }}
+                        >
+                          {service.description}
+                        </motion.p>
+                        <ul>
+                          {service.features.map((feature, i) => (
+                            <motion.li 
+                              key={i}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ 
+                                duration: 0.3, 
+                                delay: 0.1 + (i * 0.1),
+                                type: "spring", 
+                                stiffness: 200 
+                              }}
+                              whileHover={{ x: 5, color: "#64b5f6" }}
+                            >
+                              {feature}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
       </div>

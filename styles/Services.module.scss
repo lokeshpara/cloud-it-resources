@@ -1,9 +1,10 @@
 @import 'variables';
 
 .servicesContainer {
-  min-height: 100vh;
   position: relative;
-  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(#00000000, #000000);
 }
 
 .heroSection {
@@ -76,7 +77,7 @@
 
 .featureItem {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  
   padding: 2rem;
   border-radius: $border-radius-lg;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -122,8 +123,8 @@
 .stat {
   text-align: center;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: linear-gradient(#ffffff00, #ffffff00, #000000);
+
   border-radius: $border-radius-lg;
   border: 1px solid rgba(255, 255, 255, 0.2);
 
@@ -200,175 +201,250 @@
   }
 }
 
-.servicesGrid {
-  padding: 6rem 2rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+.servicesSection {
   position: relative;
-  z-index: 2;
+  padding: 6rem 2rem;
+  background: transparent;
+  z-index: 1;
 
-  .sectionTitle {
-    text-align: center;
-    font-size: 2.5rem;
-    background: $primary-gradient;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 4rem;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient( #00000000, #000000);
+    pointer-events: none;
+    z-index: -1;
   }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
+.sectionTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #64b5f6, #90caf9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
+  letter-spacing: -0.5px;
+}
+
+.sectionDescription {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.servicesAccordion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 1rem;
+  perspective: 1000px;
 }
 
-.serviceCard {
-  background: white;
-  padding: 2rem;
-  border-radius: $border-radius-lg;
-  box-shadow: $box-shadow;
-  transition: all 0.3s ease;
-  border: 1px solid rgba($primary-color, 0.1);
-
+.serviceItem {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
   &:hover {
-    box-shadow: $box-shadow-lg;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 
+                0 0 20px rgba(100, 181, 246, 0.1);
+    transform: translateY(-4px);
   }
-
-  .icon {
-    font-size: 2.5rem;
-    color: $primary-color;
-    margin-bottom: 1.5rem;
+  
+  &.expanded {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(100, 181, 246, 0.2);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(100, 181, 246, 0.15);
   }
+}
 
+.serviceHeader {
+  display: flex;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #64b5f6, #90caf9);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
   h3 {
-    color: $text-primary;
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-  }
-
-  p {
-    color: $text-secondary;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
+    flex: 1;
     margin: 0;
+    font-size: 1.3rem;
+  font-weight: 600;
+    transition: color 0.3s ease;
+    color: white;
 
+  }
+  
+  &:hover {
+    h3 {
+      color: #64b5f6;
+    }
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.serviceIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  color: #64b5f6;
+  background: rgba(100, 181, 246, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #fff;
+    background: rgba(100, 181, 246, 0.2);
+    box-shadow: 0 0 15px rgba(100, 181, 246, 0.3);
+  }
+}
+
+.chevron {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #64b5f6;
+  }
+}
+
+.serviceContent {
+  padding: 0 1.5rem 1.5rem;
+  overflow: hidden;
+  
+  p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  ul {
+    padding-left: 1rem;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem 2rem;
+    
     li {
-      color: $text-secondary;
+      color: rgba(255, 255, 255, 0.8);
       margin-bottom: 0.5rem;
-      padding-left: 1.5rem;
+      transition: all 0.3s ease;
       position: relative;
-
-      &:before {
-        content: '→';
+      padding-left: 1.2rem;
+      
+      &::before {
+        content: '•';
         position: absolute;
         left: 0;
-        color: $primary-color;
+        color: #64b5f6;
+        font-size: 1.2rem;
+        line-height: 1;
+      }
+      
+      &:hover {
+        color: #90caf9;
       }
     }
   }
 }
 
-.ctaSection {
-  padding: 6rem 2rem;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  background: linear-gradient(rgba($primary-color, 0.1), rgba($primary-color, 0.2));
-
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
+/* Media Queries */
+@media (max-width: 768px) {
+  .servicesSection {
+    padding: 4rem 1.5rem;
   }
-
-  .ctaContent {
-    backdrop-filter: blur(10px);
-    padding: 3rem;
-    border-radius: $border-radius-lg;
-    background: rgba(255, 255, 255, 0.1);
-
-    h2 {
-      font-size: 2rem;
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
-      font-size: 1.1rem;
-    }
+  
+  .sectionTitle {
+    font-size: 2.5rem;
   }
-
-  .ctaButton {
-    display: inline-block;
-    padding: 1rem 2.5rem;
-    background: white;
-    color: $primary-color;
-    border-radius: $border-radius;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: $box-shadow;
-    }
+  
+  .sectionDescription {
+    font-size: 1rem;
+    margin-bottom: 2rem;
   }
-}
-
-@media (max-width: $breakpoint-tablet) {
-  .servicesGrid {
-    padding: 4rem 1rem;
-
-    .sectionTitle {
-      font-size: 2rem;
-      margin-bottom: 3rem;
-    }
-  }
-
-  .grid {
-    gap: 1.5rem;
-  }
-
-  .serviceCard {
-    padding: 1.5rem;
-
-    .icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
+  
+  .serviceHeader {
     h3 {
       font-size: 1.1rem;
     }
-
-    p {
-      font-size: 0.95rem;
+  }
+  
+  .serviceIcon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+  
+  .serviceContent {
+    ul {
+      grid-template-columns: 1fr;
     }
   }
+}
 
-  .ctaSection {
-    padding: 4rem 1rem;
-
-    .ctaContent {
-      padding: 2rem;
-
-      h2 {
-        font-size: 1.8rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
+@media (max-width: 480px) {
+  .servicesSection {
+    padding: 3rem 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .serviceHeader {
+    padding: 1rem;
+    
+    h3 {
+      font-size: 1rem;
     }
+  }
+  
+  .serviceIcon {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    margin-right: 0.7rem;
+  }
+  
+  .serviceContent {
+    padding: 0 1rem 1rem;
   }
 }

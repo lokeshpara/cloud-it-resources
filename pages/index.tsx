@@ -90,14 +90,7 @@ export default function Home() {
               We deliver secure, scalable, and efficient cloud solutions tailored to your needs.
             </p>
             
-            <div className={styles.heroButtons}>
-              <button className={`${styles.heroButton} ${styles.primary}`}>
-                Our Services
-              </button>
-              <button className={`${styles.heroButton} ${styles.secondary}`}>
-                Contact Us
-              </button>
-            </div>
+            
 
             <div className={styles.techIcons}>
               <FaCloud className={styles.techIcon} title="Cloud Solutions" />

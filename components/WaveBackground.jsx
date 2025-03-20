@@ -1,4 +1,5 @@
-import styles from '../styles/Home.module.scss';
+import React from 'react';
+import styles from '../styles/WaveBackground.module.scss';
 
 const WaveBackground = () => {
   return (

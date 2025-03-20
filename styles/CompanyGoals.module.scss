@@ -1,6 +1,6 @@
 .goalsSection {
-  background: transparent;
-  padding: 2rem 0;
+  background: linear-gradient(rgba(0, 0, 0, 0), #0c1a228f, black);
+  padding: 1rem 0;
   position: relative;
   overflow: hidden;
   margin-top: 0;
@@ -31,7 +31,7 @@
   margin-bottom: 1rem;
   position: relative;
   font-weight: 700;
-  background: linear-gradient(45deg, #5cbfe9, #6698e8, #3784ff);
+  background:linear-gradient(45deg, #1890ff, #313e51, #3784ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   opacity: 0;

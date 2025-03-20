@@ -1,18 +1,19 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
 import styles from '../styles/Careers.module.scss';
 import WaveBackground from '../components/WaveBackground';
 import { FaBriefcase, FaClock, FaMapMarkerAlt, FaChevronDown, FaUsers, FaRocket, FaMedal, FaGraduationCap, FaHandshake, FaLightbulb } from 'react-icons/fa';
+import Link from 'next/link';
 
-const jobPositions = [
-  {
+  const jobPositions = [
+    {
     id: 1,
     title: 'Senior Cloud Architect',
-    type: 'Full-time',
+      type: 'Full-time',
     location: 'Remote / New York',
     description: 'Lead and design cloud infrastructure solutions for enterprise clients.',
-    requirements: [
+      requirements: [
       'Bachelor\'s degree in Computer Science or related field',
       '7+ years of experience with AWS/Azure/GCP',
       'Strong knowledge of cloud security and compliance',
@@ -23,10 +24,10 @@ const jobPositions = [
   {
     id: 2,
     title: 'DevOps Engineer',
-    type: 'Full-time',
+      type: 'Full-time',
     location: 'Remote / London',
     description: 'Implement and maintain CI/CD pipelines and cloud infrastructure.',
-    requirements: [
+      requirements: [
       'Bachelor\'s degree in Computer Science or related field',
       '5+ years of DevOps experience',
       'Strong knowledge of Docker and Kubernetes',
@@ -37,10 +38,10 @@ const jobPositions = [
   {
     id: 3,
     title: 'Cloud Security Specialist',
-    type: 'Full-time',
+      type: 'Full-time',
     location: 'Remote / Singapore',
     description: 'Ensure security and compliance of cloud infrastructure and applications.',
-    requirements: [
+      requirements: [
       'Bachelor\'s degree in Cybersecurity or related field',
       '5+ years of cloud security experience',
       'Security certifications (CISSP, AWS Security)',
@@ -91,34 +92,118 @@ const values = [
   }
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-};
-
 export default function Careers() {
   const [expandedJob, setExpandedJob] = useState(null);
   const [activeTab, setActiveTab] = useState('culture');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [viewportWidth, setViewportWidth] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(0);
+  const containerRef = useRef(null);
+
+  // Track mouse movement for hover effects
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
+    };
+
+    if (typeof window !== 'undefined') {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+      
+      const handleResize = () => {
+        setViewportWidth(window.innerWidth);
+        setViewportHeight(window.innerHeight);
+      };
+      
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('resize', handleResize);
+      
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
 
   const toggleJob = (jobId) => {
     setExpandedJob(expandedJob === jobId ? null : jobId);
+  };
+
+  const calculateCardPosition = (index, total) => {
+    if (!mousePosition || !containerRef.current) return { x: 0, y: 0 };
+    
+    const container = containerRef.current.getBoundingClientRect();
+    const centerX = container.left + container.width / 2;
+    const centerY = container.top + container.height / 2;
+    
+    const deltaX = (mousePosition.x - centerX) / 30;
+    const deltaY = (mousePosition.y - centerY) / 30;
+    
+    // Apply different offsets based on card position
+    const xOffset = Math.cos((index / total) * Math.PI * 2) * deltaX;
+    const yOffset = Math.sin((index / total) * Math.PI * 2) * deltaY;
+    
+    return { x: xOffset, y: yOffset };
+  };
+
+  const parallaxVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.6, 0.05, 0.01, 0.9],
+      },
+    },
+    hover: {
+      scale: 1.05,
+      boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 15
+      }
+    }
+  };
+
+  const jobItemVariants = {
+    closed: { 
+      height: "auto", 
+      transition: { 
+        duration: 0.4, 
+        ease: [0.4, 0, 0.2, 1] 
+      } 
+    },
+    open: { 
+      height: "auto", 
+      transition: { 
+        duration: 0.6, 
+        ease: [0.4, 0, 0.2, 1] 
+      } 
+    }
+  };
+
+  const staggerChildren = {
+    animate: {
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
   };
 
   return (
@@ -126,97 +211,17 @@ export default function Careers() {
       <div className={styles.careerContainer}>
         <WaveBackground />
         
-        <section className={styles.heroSection}>
-          <div className={styles.heroContent}>
-            <motion.h1 
-              className={styles.heroTitle}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              Shape the Future of Cloud Technology
-            </motion.h1>
-            <motion.p 
-              className={styles.heroSubtitle}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Join a leading cloud consultancy transforming enterprises through innovative solutions in AWS, Azure, and Google Cloud
-            </motion.p>
-            
-            <motion.div 
-              className={styles.heroFeatures}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <div className={styles.featureItem}>
-                <FaRocket className={styles.featureIcon} />
-                <h3>Cloud Excellence</h3>
-                <p>Drive digital transformation with cutting-edge cloud solutions</p>
-              </div>
-              <div className={styles.featureItem}>
-                <FaUsers className={styles.featureIcon} />
-                <h3>Global Impact</h3>
-                <p>Work with Fortune 500 companies and innovative startups</p>
-              </div>
-              <div className={styles.featureItem}>
-                <FaGraduationCap className={styles.featureIcon} />
-                <h3>Continuous Growth</h3>
-                <p>Access to certifications and advanced training programs</p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className={styles.statsContainer}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <div className={styles.stat}>
-                <span className={styles.statNumber}>200+</span>
-                <span className={styles.statLabel}>Enterprise Clients</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statNumber}>50+</span>
-                <span className={styles.statLabel}>Cloud Experts</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statNumber}>15+</span>
-                <span className={styles.statLabel}>Countries</span>
-              </div>
-              <div className={styles.stat}>
-                <span className={styles.statNumber}>100%</span>
-                <span className={styles.statLabel}>Remote-First</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className={styles.heroCTA}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <div className={styles.certifications}>
-                <img src="/aws-certified.png" alt="AWS Certified Partner" />
-                <img src="/azure-certified.png" alt="Microsoft Azure Partner" />
-                <img src="/gcp-certified.png" alt="Google Cloud Partner" />
-              </div>
-              <motion.a
-                href="#open-positions"
-                className={styles.exploreButton}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Explore Opportunities
-              </motion.a>
-            </motion.div>
-          </div>
-        </section>
-
         <section className={styles.cultureSection}>
           <div className={styles.container}>
+            <motion.h1 
+              className={styles.mainTitle}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              Join Our Team of Cloud Innovators
+            </motion.h1>
+            
             <motion.div 
               className={styles.tabsContainer}
               initial={{ opacity: 0, y: 20 }}
@@ -224,120 +229,204 @@ export default function Careers() {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <button 
+              <motion.button 
                 className={`${styles.tabButton} ${activeTab === 'culture' ? styles.active : ''}`}
                 onClick={() => setActiveTab('culture')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Our Culture
-              </button>
-              <button 
+              </motion.button>
+              <motion.button 
                 className={`${styles.tabButton} ${activeTab === 'benefits' ? styles.active : ''}`}
                 onClick={() => setActiveTab('benefits')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Benefits
-              </button>
-              <button 
+              </motion.button>
+              <motion.button 
                 className={`${styles.tabButton} ${activeTab === 'values' ? styles.active : ''}`}
                 onClick={() => setActiveTab('values')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Values
-              </button>
+              </motion.button>
             </motion.div>
 
             <div className={styles.tabContent}>
-              {activeTab === 'benefits' && (
-                <motion.div 
-                  className={styles.benefitsGrid}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {benefits.map((benefit, index) => (
-                    <motion.div
-                      key={index}
-                      className={styles.benefitCard}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <div className={styles.benefitIcon}>{benefit.icon}</div>
-                      <h3>{benefit.title}</h3>
-                      <p>{benefit.description}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
+              <AnimatePresence mode="wait">
+                {activeTab === 'benefits' && (
+                  <motion.div 
+                    className={styles.benefitsGrid}
+                    key="benefits"
+                    ref={containerRef}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    variants={staggerChildren}
+                  >
+                    {benefits.map((benefit, index) => {
+                      const position = calculateCardPosition(index, benefits.length);
+                      
+                      return (
+                        <motion.div
+                          key={index}
+                          className={styles.benefitCard}
+                          initial="initial"
+                          whileInView="animate"
+                          whileHover="hover"
+                          variants={parallaxVariants}
+                          custom={index}
+                          viewport={{ once: true, margin: "-100px" }}
+                          animate={{ 
+                            x: position.x,
+                            y: position.y
+                          }}
+                        >
+                          <motion.div 
+                            className={styles.benefitIcon}
+                            whileHover={{ 
+                              rotate: 10, 
+                              scale: 1.2,
+                              color: "#64b5f6"
+                            }}
+                          >
+                            {benefit.icon}
+                          </motion.div>
+                          <motion.h3>{benefit.title}</motion.h3>
+                          <motion.p>{benefit.description}</motion.p>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                )}
 
-              {activeTab === 'culture' && (
-                <motion.div 
-                  className={styles.cultureContent}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className={styles.cultureGrid}>
-                    <motion.div 
-                      className={styles.cultureText}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <h3>Work with Purpose</h3>
-                      <p>Join a team that's passionate about transforming businesses through innovative cloud solutions. We foster a culture of continuous learning, collaboration, and excellence.</p>
-                      <ul className={styles.cultureList}>
-                        <motion.li initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }}>
-                          Flexible remote work environment
-                        </motion.li>
-                        <motion.li initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
-                          Regular team building events
-                        </motion.li>
-                        <motion.li initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}>
-                          Mentorship programs
-                        </motion.li>
-                      </ul>
-                    </motion.div>
-                    <motion.div 
-                      className={styles.cultureImage}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.3 }}
-                    />
-                  </div>
-                </motion.div>
-              )}
+                {activeTab === 'culture' && (
+                  <motion.div 
+                    className={styles.cultureContent}
+                    key="culture"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <div className={styles.cultureGrid}>
+                      <motion.div 
+                        className={styles.cultureText}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <motion.h3 
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          Work with Purpose
+                        </motion.h3>
+                        <motion.p
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 }}
+                        >
+                          Join a team that's passionate about transforming businesses through innovative cloud solutions. We foster a culture of continuous learning, collaboration, and excellence.
+                        </motion.p>
+                        <motion.ul 
+                          className={styles.cultureList}
+                          variants={staggerChildren}
+                          initial="initial"
+                          animate="animate"
+                        >
+                          <motion.li variants={fadeInUp}>
+                            <span className={styles.listHighlight}>✓</span> Flexible remote work environment
+                          </motion.li>
+                          <motion.li variants={fadeInUp}>
+                            <span className={styles.listHighlight}>✓</span> Regular team building events
+                          </motion.li>
+                          <motion.li variants={fadeInUp}>
+                            <span className={styles.listHighlight}>✓</span> Mentorship programs
+                          </motion.li>
+                          <motion.li variants={fadeInUp}>
+                            <span className={styles.listHighlight}>✓</span> Continuous learning opportunities
+                          </motion.li>
+                        </motion.ul>
+                      </motion.div>
+                      <motion.div 
+                        className={styles.cultureImage}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <img 
+                          src="/images/culture-placeholder.jpg" 
+                          alt="Team Culture" 
+                          className={styles.cultureImageContent}
+                        />
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                )}
 
-              {activeTab === 'values' && (
-                <motion.div 
-                  className={styles.valuesGrid}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {values.map((value, index) => (
-                    <motion.div
-                      key={index}
-                      className={styles.valueCard}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
-                      }}
-                    >
-                      <div className={styles.valueIcon}>{value.icon}</div>
-                      <h3>{value.title}</h3>
-                      <p>{value.description}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
+                {activeTab === 'values' && (
+                  <motion.div 
+                    className={styles.valuesGrid}
+                    key="values"
+                    ref={containerRef}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {values.map((value, index) => {
+                      const position = calculateCardPosition(index, values.length);
+                      
+                      return (
+                        <motion.div
+                          key={index}
+                          className={styles.valueCard}
+                          initial="initial"
+                          whileInView="animate"
+                          whileHover="hover"
+                          variants={parallaxVariants}
+                          custom={index}
+                          viewport={{ once: true, margin: "-100px" }}
+                          animate={{ 
+                            x: position.x,
+                            y: position.y
+                          }}
+                        >
+                          <motion.div 
+                            className={styles.valueIcon}
+                            whileHover={{ 
+                              rotate: 10, 
+                              scale: 1.2,
+                              color: "#64b5f6"
+                            }}
+                          >
+                            {value.icon}
+                          </motion.div>
+                          <motion.h3>{value.title}</motion.h3>
+                          <motion.p>{value.description}</motion.p>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </section>
 
-        <section className={styles.jobsSection}>
+        <motion.section
+          className={styles.jobsSection}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
           <div className={styles.container}>
             <motion.h2 
               className={styles.sectionTitle}
@@ -348,137 +437,136 @@ export default function Careers() {
             >
               Open Positions
             </motion.h2>
-
+            
             <motion.div 
               className={styles.jobsGrid}
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
+              variants={staggerChildren}
+              initial="initial"
+              animate="animate"
             >
-              {jobPositions.map((job) => (
+              {jobPositions.map((job, index) => (
                 <motion.div
                   key={job.id}
                   className={`${styles.jobCard} ${expandedJob === job.id ? styles.expanded : ''}`}
-                  variants={itemVariants}
-                  whileHover={{ scale: expandedJob === job.id ? 1 : 1.02 }}
-                  onClick={() => toggleJob(job.id)}
+                  variants={fadeInUp}
+                  custom={index}
+                  whileHover={{ 
+                    scale: expandedJob === job.id ? 1 : 1.02,
+                    transition: { duration: 0.2 }
+                  }}
                 >
-                  <div className={styles.jobHeader}>
-                    <div className={styles.jobInfo}>
-                      <h3>{job.title}</h3>
-                      <div className={styles.jobMeta}>
-                        <span>
-                          <FaBriefcase /> {job.type}
-                        </span>
-                        <span>
-                          <FaMapMarkerAlt /> {job.location}
-                        </span>
-                      </div>
-                    </div>
-                    <motion.div 
-                      className={styles.expandIcon}
-                      animate={{ rotate: expandedJob === job.id ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <FaChevronDown />
-                    </motion.div>
-                  </div>
-
-                  <motion.div 
-                    className={styles.jobContent}
-                    initial={false}
-                    animate={{ 
-                      height: expandedJob === job.id ? 'auto' : 0,
-                      opacity: expandedJob === job.id ? 1 : 0
-                    }}
-                    transition={{ duration: 0.3 }}
+                  <div 
+                    className={styles.jobHeader}
+                    onClick={() => toggleJob(job.id)}
                   >
-                    <p className={styles.jobDescription}>{job.description}</p>
-                    <div className={styles.requirements}>
-                      <h4>Requirements:</h4>
-                      <ul>
-                        {job.requirements.map((req, index) => (
-                          <motion.li 
-                            key={index}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.1 * index }}
-                          >
-                            {req}
-                          </motion.li>
-                        ))}
-                      </ul>
+                    <div className={styles.jobIconTitle}>
+                      <div className={styles.jobIcon}>
+                        <FaBriefcase />
+                      </div>
+                      <h3>{job.title}</h3>
                     </div>
-                    <motion.a
-                      href={`/contact?job=${encodeURIComponent(job.title)}`}
-                      className={styles.applyButton}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Apply Now
-                    </motion.a>
-                  </motion.div>
+                    <div className={styles.jobMeta}>
+                      <span className={styles.jobType}>
+                        <FaClock />
+                        {job.type}
+                      </span>
+                      <span className={styles.jobLocation}>
+                        <FaMapMarkerAlt />
+                        {job.location}
+                      </span>
+                      <motion.span 
+                        className={styles.jobChevron}
+                        animate={{ 
+                          rotate: expandedJob === job.id ? 180 : 0,
+                          color: expandedJob === job.id ? "#64b5f6" : "rgba(255, 255, 255, 0.7)"
+                        }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <FaChevronDown />
+                      </motion.span>
+                    </div>
+                  </div>
+                  
+                  <AnimatePresence>
+                    {expandedJob === job.id && (
+                      <motion.div 
+                        className={styles.jobContent}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ 
+                          height: 'auto', 
+                          opacity: 1,
+                          transition: { 
+                            height: { duration: 0.4 },
+                            opacity: { duration: 0.3, delay: 0.1 }
+                          }
+                        }}
+                        exit={{ 
+                          height: 0, 
+                          opacity: 0,
+                          transition: { 
+                            height: { duration: 0.3 },
+                            opacity: { duration: 0.2 }
+                          }
+                        }}
+                      >
+                        <motion.p
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.2 }}
+                        >
+                          {job.description}
+                        </motion.p>
+                        
+                        <motion.h4
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.3 }}
+                        >
+                          Requirements
+                        </motion.h4>
+                        <motion.ul className={styles.requirementsList}>
+                          {job.requirements.map((req, i) => (
+                            <motion.li 
+                              key={i}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ 
+                                duration: 0.3, 
+                                delay: 0.4 + (i * 0.1)
+                              }}
+                            >
+                              {req}
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                        
+                        <motion.div 
+                          className={styles.jobApply}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.5 }}
+                        >
+                          <Link href="/contact">
+                            <motion.button
+                              className={styles.applyButton}
+                              whileHover={{
+                                scale: 1.05,
+                                boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.2)"
+                              }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              Contact Us
+                            </motion.button>
+                          </Link>
+                        </motion.div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               ))}
             </motion.div>
           </div>
-        </section>
-
-        <section className={styles.growthSection}>
-          <div className={styles.container}>
-            <motion.div
-              className={styles.growthContent}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2>Grow With Us</h2>
-              <div className={styles.growthGrid}>
-                <motion.div 
-                  className={styles.growthCard}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <FaGraduationCap className={styles.growthIcon} />
-                  <h3>Learning & Development</h3>
-                  <p>Access to online courses, certification programs, and professional development opportunities.</p>
-                </motion.div>
-                <motion.div 
-                  className={styles.growthCard}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <FaRocket className={styles.growthIcon} />
-                  <h3>Career Advancement</h3>
-                  <p>Clear career paths and opportunities for advancement within the organization.</p>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        <section className={styles.ctaSection}>
-          <div className={styles.container}>
-            <motion.div
-              className={styles.ctaContent}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2>Don't see the right position?</h2>
-              <p>Send us your resume and we'll keep you in mind for future opportunities.</p>
-              <motion.a
-                href="/contact"
-                className={styles.ctaButton}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Contact Us
-              </motion.a>
-            </motion.div>
-          </div>
-        </section>
+        </motion.section>
       </div>
     </Layout>
   );

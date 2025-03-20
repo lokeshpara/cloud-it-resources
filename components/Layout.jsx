@@ -29,4 +29,4 @@ const Layout = ({ children, title = 'Cloud.IT Resources' }) => {
   );
 };
 
-export default Layout; 
+export default Layout;
