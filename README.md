@@ -1,4 +1,4 @@
-# [Cloud IT Resources Website Access](https://lokeshpara.github.io/cloud-it-resources)
+# [Cloud IT Resources Website Access](https://clouditresourcesllc.com/)
 
 A modern, responsive website for Cloud IT Resources built with Next.js, showcasing cloud services, company information, and professional solutions with interactive animations and sleek design.
 
